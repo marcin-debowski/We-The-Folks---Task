@@ -1,5 +1,5 @@
 :root {
-  --navy: #f6431f; //#0b1e49;  - Test
+  --navy: #f6431f; /*#0b1e49;  - Test*/
 }
 
 * {
@@ -27,11 +27,12 @@ body {
 /* Design size in CSS px. js/main.js sets --scale so the stage fits the viewport. */
 #stage {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: 0;
   width: 360px;
   height: 640px;
-  transform: translate(-50%, -50%) scale(var(--scale, 1));
+  transform-origin: 0 0;
+  transform: translate(var(--x, 0), var(--y, 0)) scale(var(--scale, 1));
   background: url("../assets/bg.jpg") center / 100% 100% no-repeat;
   overflow: hidden;
 }
