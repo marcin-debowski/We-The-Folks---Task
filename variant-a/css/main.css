@@ -1,5 +1,7 @@
 :root {
   --navy: #0b1e49; /*#f6431f; - Test*/
+  --band: #d89c95;
+  --bleed: 1000px;
 }
 
 * {
@@ -34,7 +36,7 @@ body {
   transform-origin: 0 0;
   transform: translate(var(--x, 0), var(--y, 0)) scale(var(--scale, 1));
   background: url("../assets/bg.jpg") center / 100% 100% no-repeat;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .layer {
@@ -50,4 +52,23 @@ body {
   top: calc(904px / 2);
   width: calc(173px / 2);
   height: calc(192px / 2);
+}
+#stage::before,
+#stage::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--bleed));
+  right: calc(-1 * var(--bleed));
+}
+
+#stage::before {
+  top: calc(-1 * var(--bleed));
+  height: calc(var(--bleed) + 116px / 2);
+  background: #fff;
+}
+
+#stage::after {
+  top: 640px;
+  height: var(--bleed);
+  background: var(--band);
 }
