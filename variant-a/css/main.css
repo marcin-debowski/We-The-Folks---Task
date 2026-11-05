@@ -1,5 +1,5 @@
 :root {
-  --navy: #f6431f; /*#0b1e49;  - Test*/
+  --navy: #0b1e49; /*#f6431f; - Test*/
 }
 
 * {
@@ -35,4 +35,19 @@ body {
   transform: translate(var(--x, 0), var(--y, 0)) scale(var(--scale, 1));
   background: url("../assets/bg.jpg") center / 100% 100% no-repeat;
   overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: 640px;
+}
+#gesture {
+  position: absolute;
+  left: calc(295px / 2);
+  top: calc(904px / 2);
+  width: calc(173px / 2);
+  height: calc(192px / 2);
 }
