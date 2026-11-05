@@ -1,5 +1,5 @@
 import { STAGE_HEIGHT, STAGE_WIDTH } from "./stage.js";
-import { GUT_OFFSET_X } from "./layout.js";
+import { GUT_OFFSET_X, PLAYFIELD_TOP } from "./layout.js";
 
 const ASSET_RATIO = 2; // Assets are exported at 2x.
 
@@ -35,7 +35,14 @@ export function createRenderer(canvas) {
     },
     draw(images) {
       ctx.clearRect(0, 0, STAGE_WIDTH, STAGE_HEIGHT);
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, PLAYFIELD_TOP, STAGE_WIDTH, STAGE_HEIGHT - PLAYFIELD_TOP);
+      ctx.clip();
+
       drawSprite(images.gut, GUT_OFFSET_X, 0);
+
+      ctx.restore();
     },
   };
 }
