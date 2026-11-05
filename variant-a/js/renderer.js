@@ -1,10 +1,13 @@
 import { STAGE_HEIGHT, STAGE_WIDTH } from "./stage.js";
-import { GUT_OFFSET_X, PLAYFIELD_TOP } from "./layout.js";
+import { GUT_OFFSET_X, PLAYFIELD_TOP, TEXTURE_OFFSET_Y } from "./layout.js";
 
 const ASSET_RATIO = 2; // Assets are exported at 2x.
 
 const IMAGE_PATHS = {
   gut: "assets/01_game/gameplay.png",
+  texture: "assets/01_game/bg_texture.png",
+  border: "assets/border.png",
+  player: "assets/01_game/player.png",
 };
 
 export async function loadImages() {
@@ -33,14 +36,17 @@ export function createRenderer(canvas) {
       canvas.height = Math.round(STAGE_HEIGHT * pixelRatio);
       ctx.setTransform(canvas.width / STAGE_WIDTH, 0, 0, canvas.height / STAGE_HEIGHT, 0, 0);
     },
-    draw(images) {
+    draw(images, player) {
       ctx.clearRect(0, 0, STAGE_WIDTH, STAGE_HEIGHT);
       ctx.save();
       ctx.beginPath();
       ctx.rect(0, PLAYFIELD_TOP, STAGE_WIDTH, STAGE_HEIGHT - PLAYFIELD_TOP);
       ctx.clip();
 
+      drawSprite(images.texture, 0, TEXTURE_OFFSET_Y);
       drawSprite(images.gut, GUT_OFFSET_X, 0);
+      drawSprite(images.border, 0, 0);
+      drawSprite(images.player, player.x, player.y);
 
       ctx.restore();
     },

@@ -1,5 +1,6 @@
 import { fitStageToViewport } from "./stage.js";
 import { createRenderer, loadImages } from "./renderer.js";
+import { PLAYER_START } from "./layout.js";
 
 const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
@@ -9,7 +10,7 @@ const renderer = createRenderer(canvas);
 let images = null;
 
 function redraw() {
-  if (images) renderer.draw(images);
+  if (images) renderer.draw(images, PLAYER_START);
 }
 
 fitStageToViewport(viewport, stage, (scale) => {
