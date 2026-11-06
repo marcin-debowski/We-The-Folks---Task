@@ -40,5 +40,11 @@ export function createSounds() {
     stopAll() {
       allSounds.forEach((sound) => sound.pause());
     },
+
+    setMuted(muted) {
+      allSounds.forEach((sound) => {
+        sound.muted = muted;
+      });
+    },
   };
 }

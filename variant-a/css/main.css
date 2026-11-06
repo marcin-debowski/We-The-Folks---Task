@@ -125,3 +125,40 @@ body {
   width: calc(428px / 2);
   height: calc(91px / 2);
 }
+/* Mute toggle in the logo bar. No icon was provided, so it is a small inline SVG. */
+#mute {
+  position: absolute;
+  top: 13px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+#mute svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#mute .speaker {
+  fill: currentColor;
+}
+
+#mute .mute-cross,
+#mute[aria-pressed="true"] .sound-waves {
+  display: none;
+}
+
+#mute[aria-pressed="true"] .mute-cross {
+  display: inline;
+}

@@ -27,6 +27,7 @@ const failCta = document.getElementById("fail-cta");
 const replayButton = document.getElementById("replay");
 const winCard = document.getElementById("win-card");
 const winCta = document.getElementById("win-cta");
+const muteButton = document.getElementById("mute");
 
 // ?overlay=1 lays the design over the build to check alignment. Development only.
 const params = new URLSearchParams(location.search);
@@ -134,6 +135,17 @@ function openLandingPage() {
   window.open(clickTag, "_blank");
 }
 
+let muted = false;
+
+function toggleMute() {
+  muted = !muted;
+  sounds.setMuted(muted);
+  muteButton.setAttribute("aria-pressed", String(muted));
+  muteButton.setAttribute("aria-label", muted ? "Ton einschalten" : "Ton ausschalten");
+}
+
 failCta.addEventListener("click", openLandingPage);
 replayButton.addEventListener("click", resetRun);
 winCta.addEventListener("click", openLandingPage);
+muteButton.addEventListener("click", toggleMute);
+muteButton.addEventListener("pointerdown", (event) => event.stopPropagation());
