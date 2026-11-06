@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gut Run</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div id="viewport" class="is-loading">
+      <main id="stage">
+        <canvas id="game" class="layer"></canvas>
+        <img id="logo" class="layer" src="assets/logo.png" alt="Your Logo" />
+        <img
+          id="headline"
+          class="layer"
+          src="assets/01_game/tut.png"
+          alt="Bringe Poo durch den Darm ans Ziel."
+        />
+        <img id="gesture" src="assets/gesture.png" alt="Tap to run" />
+
+        <section id="fail-card" class="layer endcard" hidden>
+          <img id="fail-bubble" class="layer" src="assets/02_endcard/fail/bubble.png" alt="" />
+          <img class="layer fail-bac" src="assets/02_endcard/fail/bac1.png" alt="" />
+          <img class="layer fail-bac" src="assets/02_endcard/fail/bac2.png" alt="" />
+          <img class="layer fail-bac" src="assets/02_endcard/fail/bac3.png" alt="" />
+          <img class="layer fail-bac" src="assets/02_endcard/fail/bac4.png" alt="" />
+          <img class="layer fail-bac" src="assets/02_endcard/fail/bac5.png" alt="" />
+          <img id="fail-poo" class="layer" src="assets/02_endcard/fail/sad.png" alt="" />
+          <img
+            id="fail-headline"
+            class="layer"
+            src="assets/02_endcard/fail/hl.png"
+            alt="Poo, das tat weh! Erfahre jetzt, was deinem Darm guttut."
+          />
+          <button id="fail-cta" class="endcard-button" type="button">
+            <img src="assets/02_endcard/fail/cta.png" alt="Jetzt informieren!" />
+          </button>
+          <button id="replay" class="endcard-button" type="button">
+            <img src="assets/02_endcard/fail/replay.png" alt="Nochmal spielen" />
+          </button>
+        </section>
+
+        <section id="win-card" class="layer endcard" hidden>
+          <img id="win-bubble" class="layer" src="assets/02_endcard/win/bubble.png" alt="" />
+          <img id="win-confetti" class="layer" src="assets/02_endcard/win/konfetti.png" alt="" />
+          <img id="win-poo" class="layer" src="assets/02_endcard/win/happy.png" alt="" />
+          <img
+            id="win-headline"
+            class="layer"
+            src="assets/02_endcard/win/hl.png"
+            alt="Poo, tut das gut! Wenn du weißt, was dein Darm braucht."
+          />
+          <button id="win-cta" class="endcard-button" type="button">
+            <img src="assets/02_endcard/win/cta.png" alt="Jetzt mehr erfahren" />
+          </button>
+        </section>
+        <button id="mute" type="button" aria-label="Ton ausschalten" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path class="speaker" d="M4 9h4l5-4v14l-5-4H4z" />
+            <path class="sound-waves" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" />
+            <path class="mute-cross" d="M16 9l6 6M22 9l-6 6" />
+          </svg>
+        </button>
+      </main>
+    </div>
+    <script src="js/vendor/gsap.min.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
