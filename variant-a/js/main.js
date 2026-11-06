@@ -4,6 +4,7 @@ import { PLAYER_START, START_OBSTACLES } from "./layout.js";
 
 const GRAVITY = 1200; // stage px per second², tuned by feel
 const MAX_FRAME_TIME = 1 / 30; // seconds; caps dt after a lag or a hidden tab
+const JUMP_SPEED = 420;
 
 const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
@@ -48,11 +49,16 @@ function update(dt) {
   player.y += player.vy * dt;
 }
 
+function jump() {
+  player.vy = -JUMP_SPEED;
+}
+
 function handleTap() {
   if (state === "start") {
     state = "playing";
     gesture.hidden = true;
   }
+  if (state === "playing") jump();
 }
 viewport.addEventListener("pointerdown", handleTap);
 
