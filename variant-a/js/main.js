@@ -1,6 +1,7 @@
 import { fitStageToViewport, STAGE_WIDTH } from "./stage.js";
 import { createRenderer, loadImages } from "./renderer.js";
 import { circleOverlapsShape, obstacleHitboxes, playerHitboxes } from "./hitboxes.js";
+import { createSounds } from "./audio.js";
 import {
   CEILING_Y,
   FLOOR_Y,
@@ -39,6 +40,8 @@ if (params.has("overlay")) {
 }
 
 const renderer = createRenderer(canvas, params.has("debug"));
+const sounds = createSounds();
+
 let images = null;
 let state = "start";
 const player = { ...PLAYER_START, vy: 0 };
@@ -89,17 +92,20 @@ function fail() {
   state = "fail";
   failCard.hidden = false;
   stage.classList.add("is-endcard");
+  sounds.playFail();
 }
 function win() {
   state = "win";
   winCard.hidden = false;
   stage.classList.add("is-endcard");
+  sounds.playWin();
 }
 
 function resetRun() {
   state = "start";
   Object.assign(player, PLAYER_START, { vy: 0 });
   scrollX = 0;
+  sounds.stopAll();
 
   gesture.hidden = false;
   failCard.hidden = true;
@@ -114,6 +120,7 @@ function handleTap() {
   if (state === "start") {
     state = "playing";
     gesture.hidden = true;
+    sounds.startMusic();
   }
   if (state === "playing") jump();
 }
