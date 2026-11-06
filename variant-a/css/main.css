@@ -70,8 +70,8 @@ body {
 }
 
 #stage::after {
-  top: 640px;
-  height: var(--bleed);
+  top: 639px; /* 1 px overlap hides the rounding seam at the stage edge */
+  height: calc(var(--bleed) + 1px);
   background: var(--band);
 }
 /* Development overlay, see ?overlay=1 in js/main.js. */
