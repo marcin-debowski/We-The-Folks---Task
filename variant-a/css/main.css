@@ -81,8 +81,15 @@ body {
 }
 
 /* Endcards cover everything below the logo bar (116 px in the 2x design). */
-.endcard {
-  background: linear-gradient(transparent 58px, var(--navy) 58px);
+/* It reaches 2 px past the stage edges, so a fractional edge never lets the game show through. */
+.endcard::before {
+  content: "";
+  position: absolute;
+  top: 58px;
+  bottom: -2px;
+  left: -2px;
+  right: -2px;
+  background: var(--navy);
 }
 
 /* On tall phones the band below the stage turns navy to match the endcard. */
