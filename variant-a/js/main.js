@@ -34,6 +34,18 @@ const headline = document.getElementById("headline");
 // ?overlay=1 lays the design over the build to check alignment. Development only.
 const params = new URLSearchParams(location.search);
 
+// Users who turn off animations in their system settings get the final states right away.
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function startLoop(animation) {
+  if (!reduceMotion) animation.play(0);
+}
+
+function playEntrance(timeline) {
+  if (reduceMotion) timeline.progress(1);
+  else timeline.restart();
+}
+
 if (params.has("overlay")) {
   const overlay = new Image();
   overlay.src = "design/01-start.png";
@@ -97,13 +109,13 @@ function fail() {
   sounds.playCrash();
   failCard.hidden = false;
   stage.classList.add("is-endcard");
-  failIntro.restart();
+  playEntrance(failIntro);
 }
 function win() {
   state = "win";
   winCard.hidden = false;
   stage.classList.add("is-endcard");
-  winIntro.restart();
+  playEntrance(winIntro);
 }
 
 function resetRun() {
@@ -113,7 +125,7 @@ function resetRun() {
   sounds.stopAll();
 
   gesture.hidden = false;
-  tapHint.play(0);
+  startLoop(tapHint);
   failCard.hidden = true;
   failIntro.pause(0);
   stage.classList.remove("is-endcard");
@@ -194,8 +206,8 @@ const winIntro = gsap
   .from("#win-poo", { y: -80, autoAlpha: 0, duration: 0.8, ease: "bounce.out" }, 0.45)
   .call(
     () => {
-      winLoop.play(0);
-      confettiLoop.play(0);
+      startLoop(winLoop);
+      startLoop(confettiLoop);
     },
     null,
     1.25,
@@ -211,7 +223,9 @@ function playIntro() {
     .from(headline, { y: 20, autoAlpha: 0 }, 0.25)
     .from(player, { y: 0, duration: 1, ease: "bounce.out" }, 0.35)
     .from(gesture, { scale: 0, autoAlpha: 0, ease: "back.out(2)" }, "-=0.3")
-    .call(() => tapHint.play(0));
+    .call(() => startLoop(tapHint));
+
+  if (reduceMotion) intro.progress(1);
 }
 
 function handleTap() {
@@ -260,5 +274,5 @@ document.addEventListener("visibilitychange", handleVisibilityChange);
 
 images = await loadImages();
 requestAnimationFrame(frame);
-stage.classList.remove("is-loading");
+viewport.classList.remove("is-loading");
 playIntro();

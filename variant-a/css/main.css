@@ -163,6 +163,35 @@ body {
   display: inline;
 }
 
-#stage.is-loading > * {
+/* Loading screen: the whole stage stays hidden until the images are loaded and the scale is set,
+   so the first frames never show an unscaled stage or bare colour bands. */
+#viewport.is-loading #stage {
   visibility: hidden;
+}
+
+#viewport.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 3px solid rgb(255 255 255 / 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* The spinner shows that something is happening, so it stays, just slower. */
+@media (prefers-reduced-motion: reduce) {
+  #viewport.is-loading::after {
+    animation-duration: 2.4s;
+  }
 }
