@@ -14,6 +14,9 @@ export function createSounds() {
   allSounds.forEach((sound) => {
     sound.volume = VOLUME;
   });
+
+  let pausedByVisibility = [];
+
   function playFromStart(sound) {
     sound.currentTime = 0;
     sound.play().catch(() => {}); // a blocked play() must not break the game
@@ -45,6 +48,16 @@ export function createSounds() {
       allSounds.forEach((sound) => {
         sound.muted = muted;
       });
+    },
+    pauseForHidden() {
+      pausedByVisibility = allSounds.filter((sound) => !sound.paused);
+      pausedByVisibility.forEach((sound) => sound.pause());
+    },
+
+    // The tab is visible again: resume only what was playing before.
+    resumeAfterHidden() {
+      pausedByVisibility.forEach((sound) => sound.play().catch(() => {}));
+      pausedByVisibility = [];
     },
   };
 }

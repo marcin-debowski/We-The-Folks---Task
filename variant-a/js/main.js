@@ -47,6 +47,7 @@ let images = null;
 let state = "start";
 const player = { ...PLAYER_START, vy: 0 };
 let scrollX = 0;
+let paused = false;
 
 function redraw() {
   if (images) renderer.draw(images, { player, obstacles: OBSTACLES, scrollX });
@@ -62,7 +63,7 @@ let lastTime = null;
 function frame(time) {
   const dt = lastTime === null ? 0 : Math.min((time - lastTime) / 1000, MAX_FRAME_TIME);
   lastTime = time;
-  if (state === "playing") update(dt);
+  if (state === "playing" && !paused) update(dt);
   redraw();
   requestAnimationFrame(frame);
 }
@@ -144,8 +145,20 @@ function toggleMute() {
   muteButton.setAttribute("aria-label", muted ? "Ton einschalten" : "Ton ausschalten");
 }
 
+function handleVisibilityChange() {
+  paused = document.hidden;
+
+  if (paused) {
+    sounds.pauseForHidden();
+  } else {
+    lastTime = null; // the next frame starts with dt = 0, not with the whole hidden time
+    sounds.resumeAfterHidden();
+  }
+}
+
 failCta.addEventListener("click", openLandingPage);
 replayButton.addEventListener("click", resetRun);
 winCta.addEventListener("click", openLandingPage);
 muteButton.addEventListener("click", toggleMute);
 muteButton.addEventListener("pointerdown", (event) => event.stopPropagation());
+document.addEventListener("visibilitychange", handleVisibilityChange);
