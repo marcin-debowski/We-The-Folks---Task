@@ -22,6 +22,8 @@ const stage = document.getElementById("stage");
 const canvas = document.getElementById("game");
 const gesture = document.getElementById("gesture");
 const failCard = document.getElementById("fail-card");
+const failCta = document.getElementById("fail-cta");
+const replayButton = document.getElementById("replay");
 
 // ?overlay=1 lays the design over the build to check alignment. Development only.
 const params = new URLSearchParams(location.search);
@@ -91,6 +93,16 @@ function win() {
   console.log("Run won: reached the end of the gut");
 }
 
+function resetRun() {
+  state = "start";
+  Object.assign(player, PLAYER_START, { vy: 0 });
+  scrollX = 0;
+
+  gesture.hidden = false;
+  failCard.hidden = true;
+  stage.classList.remove("is-endcard");
+}
+
 function jump() {
   player.vy = -JUMP_SPEED;
 }
@@ -106,3 +118,11 @@ viewport.addEventListener("pointerdown", handleTap);
 
 images = await loadImages();
 requestAnimationFrame(frame);
+
+function openLandingPage() {
+  const clickTag = window.clickTag || "https://example.com/landing";
+  window.open(clickTag, "_blank");
+}
+
+failCta.addEventListener("click", openLandingPage);
+replayButton.addEventListener("click", resetRun);
