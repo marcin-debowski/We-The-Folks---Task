@@ -71,3 +71,25 @@ export function obstacleHitboxes({ image, x, y }, sprite, scrollX) {
     },
   ];
 }
+
+//Colision
+function circlesOverlap(a, b) {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  const radii = a.r + b.r;
+  return dx * dx + dy * dy < radii * radii;
+}
+
+function circleOverlapsRect(circle, rect) {
+  const nearestX = Math.max(rect.x, Math.min(circle.x, rect.x + rect.w));
+  const nearestY = Math.max(rect.y, Math.min(circle.y, rect.y + rect.h));
+  const dx = circle.x - nearestX;
+  const dy = circle.y - nearestY;
+  return dx * dx + dy * dy < circle.r * circle.r;
+}
+
+export function circleOverlapsShape(circle, shape) {
+  return shape.type === "circle"
+    ? circlesOverlap(circle, shape)
+    : circleOverlapsRect(circle, shape);
+}

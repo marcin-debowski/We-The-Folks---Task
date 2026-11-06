@@ -1,5 +1,6 @@
 import { fitStageToViewport, STAGE_WIDTH } from "./stage.js";
 import { createRenderer, loadImages } from "./renderer.js";
+import { circleOverlapsShape, obstacleHitboxes, playerHitboxes } from "./hitboxes.js";
 import {
   CEILING_Y,
   FLOOR_Y,
@@ -57,6 +58,16 @@ function frame(time) {
   requestAnimationFrame(frame);
 }
 
+function touchesObstacle() {
+  const playerCircles = playerHitboxes(player);
+
+  return OBSTACLES.some((obstacle) =>
+    obstacleHitboxes(obstacle, images[obstacle.image], scrollX).some((shape) =>
+      playerCircles.some((circle) => circleOverlapsShape(circle, shape)),
+    ),
+  );
+}
+
 function update(dt) {
   scrollX = Math.min(scrollX + SCROLL_SPEED * dt, MAX_SCROLL_X);
 
@@ -65,13 +76,13 @@ function update(dt) {
 
   const hitCeiling = player.y < CEILING_Y;
   const hitFloor = player.y + PLAYER_HEIGHT > FLOOR_Y;
-  if (hitCeiling || hitFloor) fail();
+  if (hitCeiling || hitFloor || touchesObstacle()) fail();
   else if (scrollX === MAX_SCROLL_X) win();
 }
 
 function fail() {
   state = "fail";
-  console.log("Run failed: left the playfield");
+  console.log("Run failed");
 }
 function win() {
   state = "win";
