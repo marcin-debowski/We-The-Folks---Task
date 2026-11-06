@@ -10,3 +10,7 @@ export const START_OBSTACLES = [
   { image: "bac2", x: 549 / 2, y: 657 / 2 },
   { image: "txt2", x: 603 / 2, y: 778 / 2 },
 ];
+
+export const CEILING_Y = 448 / 2;
+export const FLOOR_Y = 1171 / 2;
+export const PLAYER_HEIGHT = 82 / 2;

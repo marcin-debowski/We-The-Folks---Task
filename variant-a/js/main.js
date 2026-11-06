@@ -1,10 +1,10 @@
 import { fitStageToViewport } from "./stage.js";
 import { createRenderer, loadImages } from "./renderer.js";
-import { PLAYER_START, START_OBSTACLES } from "./layout.js";
+import { CEILING_Y, FLOOR_Y, PLAYER_HEIGHT, PLAYER_START, START_OBSTACLES } from "./layout.js";
 
 const GRAVITY = 1200; // stage px per second², tuned by feel
 const MAX_FRAME_TIME = 1 / 30; // seconds; caps dt after a lag or a hidden tab
-const JUMP_SPEED = 420;
+const JUMP_SPEED = 220;
 
 const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
@@ -47,6 +47,15 @@ function frame(time) {
 function update(dt) {
   player.vy += GRAVITY * dt;
   player.y += player.vy * dt;
+
+  const hitCeiling = player.y < CEILING_Y;
+  const hitFloor = player.y + PLAYER_HEIGHT > FLOOR_Y;
+  if (hitCeiling || hitFloor) fail();
+}
+
+function fail() {
+  state = "fail";
+  console.log("Run failed: left the playfield");
 }
 
 function jump() {
