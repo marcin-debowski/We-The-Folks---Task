@@ -10,11 +10,12 @@ import {
   OBSTACLES,
   GUT_OFFSET_X,
   GUT_WIDTH,
+  READY_Y,
 } from "./layout.js";
 
 const GRAVITY = 1200; // stage px per second², tuned by feel
 const MAX_FRAME_TIME = 1 / 30; // seconds; caps dt after a lag or a hidden tab
-const JUMP_SPEED = 220;
+const JUMP_SPEED = 280;
 const SCROLL_SPEED = 130;
 const MAX_SCROLL_X = GUT_WIDTH + GUT_OFFSET_X - STAGE_WIDTH;
 
@@ -228,14 +229,31 @@ function playIntro() {
   if (reduceMotion) intro.progress(1);
 }
 
+// "Get ready": the player glides to the middle of the playfield before physics starts,
+// so the first jump never hits the ceiling and the obstacles are still far away.
+function getReady() {
+  state = "ready";
+  player.vy = 0;
+  gsap.to(player, {
+    y: READY_Y,
+    duration: reduceMotion ? 0 : 0.6,
+    ease: "power2.inOut",
+    onComplete: () => {
+      state = "playing";
+    },
+  });
+}
+
 function handleTap() {
   if (state === "start") {
     intro.progress(1);
     tapHint.pause(0);
-    state = "playing";
     gesture.hidden = true;
     sounds.startMusic();
+    getReady();
+    return;
   }
+
   if (state === "playing") jump();
 }
 viewport.addEventListener("pointerdown", handleTap);
