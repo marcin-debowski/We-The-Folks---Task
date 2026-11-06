@@ -8,6 +8,10 @@ const IMAGE_PATHS = {
   texture: "assets/01_game/bg_texture.png",
   border: "assets/border.png",
   player: "assets/01_game/player.png",
+  bac2: "assets/01_game/bac2.png",
+  bac6: "assets/01_game/bac6.png",
+  txt1: "assets/01_game/txt1.png",
+  txt2: "assets/01_game/txt2.png",
 };
 
 export async function loadImages() {
@@ -36,7 +40,7 @@ export function createRenderer(canvas) {
       canvas.height = Math.round(STAGE_HEIGHT * pixelRatio);
       ctx.setTransform(canvas.width / STAGE_WIDTH, 0, 0, canvas.height / STAGE_HEIGHT, 0, 0);
     },
-    draw(images, player) {
+    draw(images, { player, obstacles }) {
       ctx.clearRect(0, 0, STAGE_WIDTH, STAGE_HEIGHT);
       ctx.save();
       ctx.beginPath();
@@ -46,6 +50,7 @@ export function createRenderer(canvas) {
       drawSprite(images.texture, 0, TEXTURE_OFFSET_Y);
       drawSprite(images.gut, GUT_OFFSET_X, 0);
       drawSprite(images.border, 0, 0);
+      obstacles.forEach(({ image, x, y }) => drawSprite(images[image], x, y));
       drawSprite(images.player, player.x, player.y);
 
       ctx.restore();
