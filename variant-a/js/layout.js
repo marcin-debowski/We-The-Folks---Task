@@ -4,7 +4,7 @@ export const TEXTURE_OFFSET_Y = 43 / 2;
 
 export const PLAYER_START = { x: 111 / 2, y: 517 / 2 };
 
-export const START_OBSTACLES = [
+export const OBSTACLES = [
   { image: "bac6", x: 188 / 2, y: 636 / 2 },
   { image: "txt1", x: 199 / 2, y: 740 / 2 },
 

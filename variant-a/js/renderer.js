@@ -8,10 +8,21 @@ const IMAGE_PATHS = {
   texture: "assets/01_game/bg_texture.png",
   border: "assets/border.png",
   player: "assets/01_game/player.png",
+  bac1: "assets/01_game/bac1.png",
   bac2: "assets/01_game/bac2.png",
+  bac3: "assets/01_game/bac3.png",
+  bac4: "assets/01_game/bac4.png",
+  bac5: "assets/01_game/bac5.png",
   bac6: "assets/01_game/bac6.png",
   txt1: "assets/01_game/txt1.png",
   txt2: "assets/01_game/txt2.png",
+  txt3: "assets/01_game/txt3.png",
+  txt4: "assets/01_game/txt4.png",
+  txt5: "assets/01_game/txt5.png",
+  txt6: "assets/01_game/txt6.png",
+  txt7: "assets/01_game/txt7.png",
+  txt8: "assets/01_game/txt8.png",
+  txt9: "assets/01_game/txt9.png",
 };
 
 export async function loadImages() {

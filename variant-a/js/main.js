@@ -5,7 +5,7 @@ import {
   FLOOR_Y,
   PLAYER_HEIGHT,
   PLAYER_START,
-  START_OBSTACLES,
+  OBSTACLES,
   GUT_OFFSET_X,
   GUT_WIDTH,
 } from "./layout.js";
@@ -37,7 +37,7 @@ const player = { ...PLAYER_START, vy: 0 };
 let scrollX = 0;
 
 function redraw() {
-  if (images) renderer.draw(images, { player, obstacles: START_OBSTACLES, scrollX });
+  if (images) renderer.draw(images, { player, obstacles: OBSTACLES, scrollX });
 }
 
 fitStageToViewport(viewport, stage, (scale) => {
