@@ -14,3 +14,5 @@ export const START_OBSTACLES = [
 export const CEILING_Y = 448 / 2;
 export const FLOOR_Y = 1171 / 2;
 export const PLAYER_HEIGHT = 82 / 2;
+
+export const GUT_WIDTH = 5056 / 2;

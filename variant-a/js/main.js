@@ -1,11 +1,20 @@
-import { fitStageToViewport } from "./stage.js";
+import { fitStageToViewport, STAGE_WIDTH } from "./stage.js";
 import { createRenderer, loadImages } from "./renderer.js";
-import { CEILING_Y, FLOOR_Y, PLAYER_HEIGHT, PLAYER_START, START_OBSTACLES } from "./layout.js";
+import {
+  CEILING_Y,
+  FLOOR_Y,
+  PLAYER_HEIGHT,
+  PLAYER_START,
+  START_OBSTACLES,
+  GUT_OFFSET_X,
+  GUT_WIDTH,
+} from "./layout.js";
 
 const GRAVITY = 1200; // stage px per second², tuned by feel
 const MAX_FRAME_TIME = 1 / 30; // seconds; caps dt after a lag or a hidden tab
 const JUMP_SPEED = 220;
 const SCROLL_SPEED = 130;
+const MAX_SCROLL_X = GUT_WIDTH + GUT_OFFSET_X - STAGE_WIDTH;
 
 const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
@@ -47,7 +56,7 @@ function frame(time) {
 }
 
 function update(dt) {
-  scrollX += SCROLL_SPEED * dt;
+  scrollX = Math.min(scrollX + SCROLL_SPEED * dt, MAX_SCROLL_X);
 
   player.vy += GRAVITY * dt;
   player.y += player.vy * dt;
@@ -55,11 +64,16 @@ function update(dt) {
   const hitCeiling = player.y < CEILING_Y;
   const hitFloor = player.y + PLAYER_HEIGHT > FLOOR_Y;
   if (hitCeiling || hitFloor) fail();
+  else if (scrollX === MAX_SCROLL_X) win();
 }
 
 function fail() {
   state = "fail";
   console.log("Run failed: left the playfield");
+}
+function win() {
+  state = "win";
+  console.log("Run won: reached the end of the gut");
 }
 
 function jump() {
