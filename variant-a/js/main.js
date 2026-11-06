@@ -2,6 +2,9 @@ import { fitStageToViewport } from "./stage.js";
 import { createRenderer, loadImages } from "./renderer.js";
 import { PLAYER_START, START_OBSTACLES } from "./layout.js";
 
+const GRAVITY = 1200; // stage px per second², tuned by feel
+const MAX_FRAME_TIME = 1 / 30; // seconds; caps dt after a lag or a hidden tab
+
 const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
 const canvas = document.getElementById("game");
@@ -18,9 +21,11 @@ if (new URLSearchParams(location.search).has("overlay")) {
 
 const renderer = createRenderer(canvas);
 let images = null;
+let state = "start";
+const player = { ...PLAYER_START, vy: 0 };
 
 function redraw() {
-  if (images) renderer.draw(images, { player: PLAYER_START, obstacles: START_OBSTACLES });
+  if (images) renderer.draw(images, { player, obstacles: START_OBSTACLES });
 }
 
 fitStageToViewport(viewport, stage, (scale) => {
@@ -28,12 +33,20 @@ fitStageToViewport(viewport, stage, (scale) => {
   redraw();
 });
 
-function frame() {
+let lastTime = null;
+
+function frame(time) {
+  const dt = lastTime === null ? 0 : Math.min((time - lastTime) / 1000, MAX_FRAME_TIME);
+  lastTime = time;
+  if (state === "playing") update(dt);
   redraw();
   requestAnimationFrame(frame);
 }
 
-let state = "start";
+function update(dt) {
+  player.vy += GRAVITY * dt;
+  player.y += player.vy * dt;
+}
 
 function handleTap() {
   if (state === "start") {
