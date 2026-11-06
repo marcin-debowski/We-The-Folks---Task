@@ -103,7 +103,7 @@ function win() {
   state = "win";
   winCard.hidden = false;
   stage.classList.add("is-endcard");
-  sounds.playWin();
+  winIntro.restart();
 }
 
 function resetRun() {
@@ -159,6 +159,49 @@ const failIntro = gsap
     { scale: 0.8, autoAlpha: 0, ease: "back.out(2)", stagger: 0.12 },
     1.45,
   );
+
+// After the win entrance the poo keeps celebrating: two hops, a short rest, repeat.
+const winLoop = gsap
+  .timeline({ paused: true, repeat: -1, repeatDelay: 0.6 })
+  .to("#win-poo", { y: -14, duration: 0.3, ease: "power1.out", repeat: 3, yoyo: true });
+
+// The confetti pulses without a break, independent from the poo's rhythm.
+const confettiLoop = gsap.to("#win-confetti", {
+  scale: 1.04,
+  transformOrigin: "104px 178px",
+  duration: 0.6,
+  ease: "sine.inOut",
+  repeat: -1,
+  yoyo: true,
+  paused: true,
+});
+
+// Win endcard entrance: confetti bursts out of the party hat, the poo lands and the loop starts.
+const winIntro = gsap
+  .timeline({ paused: true, defaults: { duration: 0.5, ease: "power2.out" } })
+  .from(winCard, { autoAlpha: 0, duration: 0.4 })
+  .call(() => sounds.playWin(), null, 0)
+  .from(
+    "#win-bubble",
+    { scale: 0.6, autoAlpha: 0, transformOrigin: "180px 245px", ease: "back.out(1.7)" },
+    0.1,
+  )
+  .from(
+    "#win-confetti",
+    { scale: 0, autoAlpha: 0, transformOrigin: "104px 178px", duration: 0.9, ease: "expo.out" },
+    0.35,
+  )
+  .from("#win-poo", { y: -80, autoAlpha: 0, duration: 0.8, ease: "bounce.out" }, 0.45)
+  .call(
+    () => {
+      winLoop.play(0);
+      confettiLoop.play(0);
+    },
+    null,
+    1.25,
+  )
+  .from("#win-headline", { y: 20, autoAlpha: 0 }, 0.9)
+  .from(winCta, { scale: 0.8, autoAlpha: 0, ease: "back.out(2)" }, 1.2);
 
 function playIntro() {
   intro = gsap
