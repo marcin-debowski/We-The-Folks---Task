@@ -5,6 +5,7 @@ import { CEILING_Y, FLOOR_Y, PLAYER_HEIGHT, PLAYER_START, START_OBSTACLES } from
 const GRAVITY = 1200; // stage px per second², tuned by feel
 const MAX_FRAME_TIME = 1 / 30; // seconds; caps dt after a lag or a hidden tab
 const JUMP_SPEED = 220;
+const SCROLL_SPEED = 130;
 
 const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
@@ -24,9 +25,10 @@ const renderer = createRenderer(canvas);
 let images = null;
 let state = "start";
 const player = { ...PLAYER_START, vy: 0 };
+let scrollX = 0;
 
 function redraw() {
-  if (images) renderer.draw(images, { player, obstacles: START_OBSTACLES });
+  if (images) renderer.draw(images, { player, obstacles: START_OBSTACLES, scrollX });
 }
 
 fitStageToViewport(viewport, stage, (scale) => {
@@ -45,6 +47,8 @@ function frame(time) {
 }
 
 function update(dt) {
+  scrollX += SCROLL_SPEED * dt;
+
   player.vy += GRAVITY * dt;
   player.y += player.vy * dt;
 

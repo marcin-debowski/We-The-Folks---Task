@@ -40,7 +40,7 @@ export function createRenderer(canvas) {
       canvas.height = Math.round(STAGE_HEIGHT * pixelRatio);
       ctx.setTransform(canvas.width / STAGE_WIDTH, 0, 0, canvas.height / STAGE_HEIGHT, 0, 0);
     },
-    draw(images, { player, obstacles }) {
+    draw(images, { player, obstacles, scrollX }) {
       ctx.clearRect(0, 0, STAGE_WIDTH, STAGE_HEIGHT);
       ctx.save();
       ctx.beginPath();
@@ -48,9 +48,9 @@ export function createRenderer(canvas) {
       ctx.clip();
 
       drawSprite(images.texture, 0, TEXTURE_OFFSET_Y);
-      drawSprite(images.gut, GUT_OFFSET_X, 0);
+      drawSprite(images.gut, GUT_OFFSET_X - scrollX, 0);
       drawSprite(images.border, 0, 0);
-      obstacles.forEach(({ image, x, y }) => drawSprite(images[image], x, y));
+      obstacles.forEach(({ image, x, y }) => drawSprite(images[image], x - scrollX, y));
       drawSprite(images.player, player.x, player.y);
 
       ctx.restore();
