@@ -79,3 +79,42 @@ body {
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* Endcards cover everything below the logo bar (116 px in the 2x design). */
+.endcard {
+  background: linear-gradient(transparent 58px, var(--navy) 58px);
+}
+
+/* On tall phones the band below the stage turns navy to match the endcard. */
+#stage.is-endcard::after {
+  background: var(--navy);
+}
+
+.endcard-button {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.endcard-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Button positions measured in the 2x design, sizes from the assets. */
+#fail-cta {
+  left: calc(74px / 2);
+  top: calc(965px / 2);
+  width: calc(372px / 2);
+  height: calc(77px / 2);
+}
+
+#replay {
+  left: calc(75px / 2);
+  top: calc(1077px / 2);
+  width: calc(371px / 2);
+  height: calc(81px / 2);
+}

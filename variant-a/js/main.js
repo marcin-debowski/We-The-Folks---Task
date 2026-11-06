@@ -21,6 +21,7 @@ const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
 const canvas = document.getElementById("game");
 const gesture = document.getElementById("gesture");
+const failCard = document.getElementById("fail-card");
 
 // ?overlay=1 lays the design over the build to check alignment. Development only.
 const params = new URLSearchParams(location.search);
@@ -82,7 +83,8 @@ function update(dt) {
 
 function fail() {
   state = "fail";
-  console.log("Run failed");
+  failCard.hidden = false;
+  stage.classList.add("is-endcard");
 }
 function win() {
   state = "win";
