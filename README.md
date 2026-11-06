@@ -44,7 +44,7 @@ To test reduced motion without changing system settings: DevTools → Ctrl+Shift
 
 ### Weight
 
-The shipped ad (everything in `variant-a/` except `design/`, which is only used by the `?overlay=1` check) is **2.02 MB**, under the 3 MB limit. I did not compress the assets yet; see "Next steps".
+The shipped ad (everything in `variant-a/` except `design/`, which is only used by the `?overlay=1` check) is **2.02 MB**, under the 3 MB limit. I did not compress the assets yet; see [DECISIONS.md](DECISIONS.md).
 
 ### Known issues and shortcuts
 
