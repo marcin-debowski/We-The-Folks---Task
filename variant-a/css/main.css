@@ -24,6 +24,8 @@ body {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  touch-action: none;
+  user-select: none;
 }
 
 /* Design size in CSS px. js/main.js sets --scale so the stage fits the viewport. */

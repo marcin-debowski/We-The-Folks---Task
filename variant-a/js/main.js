@@ -5,6 +5,7 @@ import { PLAYER_START, START_OBSTACLES } from "./layout.js";
 const viewport = document.getElementById("viewport");
 const stage = document.getElementById("stage");
 const canvas = document.getElementById("game");
+const gesture = document.getElementById("gesture");
 
 // ?overlay=1 lays the design over the build to check alignment. Development only.
 if (new URLSearchParams(location.search).has("overlay")) {
@@ -31,6 +32,16 @@ function frame() {
   redraw();
   requestAnimationFrame(frame);
 }
+
+let state = "start";
+
+function handleTap() {
+  if (state === "start") {
+    state = "playing";
+    gesture.hidden = true;
+  }
+}
+viewport.addEventListener("pointerdown", handleTap);
 
 images = await loadImages();
 requestAnimationFrame(frame);
