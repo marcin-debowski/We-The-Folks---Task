@@ -118,3 +118,10 @@ body {
   width: calc(371px / 2);
   height: calc(81px / 2);
 }
+
+#win-cta {
+  left: calc(56px / 2);
+  top: calc(1120px / 2);
+  width: calc(428px / 2);
+  height: calc(91px / 2);
+}

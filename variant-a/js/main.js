@@ -24,6 +24,8 @@ const gesture = document.getElementById("gesture");
 const failCard = document.getElementById("fail-card");
 const failCta = document.getElementById("fail-cta");
 const replayButton = document.getElementById("replay");
+const winCard = document.getElementById("win-card");
+const winCta = document.getElementById("win-cta");
 
 // ?overlay=1 lays the design over the build to check alignment. Development only.
 const params = new URLSearchParams(location.search);
@@ -90,7 +92,8 @@ function fail() {
 }
 function win() {
   state = "win";
-  console.log("Run won: reached the end of the gut");
+  winCard.hidden = false;
+  stage.classList.add("is-endcard");
 }
 
 function resetRun() {
@@ -126,3 +129,4 @@ function openLandingPage() {
 
 failCta.addEventListener("click", openLandingPage);
 replayButton.addEventListener("click", resetRun);
+winCta.addEventListener("click", openLandingPage);
