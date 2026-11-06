@@ -162,3 +162,7 @@ body {
 #mute[aria-pressed="true"] .mute-cross {
   display: inline;
 }
+
+#stage.is-loading > * {
+  visibility: hidden;
+}

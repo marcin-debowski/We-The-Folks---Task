@@ -28,6 +28,8 @@ const replayButton = document.getElementById("replay");
 const winCard = document.getElementById("win-card");
 const winCta = document.getElementById("win-cta");
 const muteButton = document.getElementById("mute");
+const logo = document.getElementById("logo");
+const headline = document.getElementById("headline");
 
 // ?overlay=1 lays the design over the build to check alignment. Development only.
 const params = new URLSearchParams(location.search);
@@ -110,6 +112,7 @@ function resetRun() {
   sounds.stopAll();
 
   gesture.hidden = false;
+  tapHint.play(0);
   failCard.hidden = true;
   stage.classList.remove("is-endcard");
 }
@@ -118,8 +121,38 @@ function jump() {
   player.vy = -JUMP_SPEED;
 }
 
+let intro = null;
+//Looping tap hint
+const tapHint = gsap.fromTo(
+  gesture,
+  { scale: 1, y: 0 },
+  {
+    scale: 0.9,
+    y: 6,
+    transformOrigin: "35% 15%",
+    duration: 0.45,
+    ease: "sine.inOut",
+    repeat: -1,
+    yoyo: true,
+    paused: true,
+  },
+);
+
+function playIntro() {
+  intro = gsap
+    .timeline({ defaults: { duration: 0.5, ease: "power2.out" } })
+    .from(canvas, { autoAlpha: 0, duration: 0.6 })
+    .from(logo, { y: -30, autoAlpha: 0 }, 0.1)
+    .from(headline, { y: 20, autoAlpha: 0 }, 0.25)
+    .from(player, { y: 0, duration: 1, ease: "bounce.out" }, 0.35)
+    .from(gesture, { scale: 0, autoAlpha: 0, ease: "back.out(2)" }, "-=0.3")
+    .call(() => tapHint.play(0));
+}
+
 function handleTap() {
   if (state === "start") {
+    intro.progress(1);
+    tapHint.pause(0);
     state = "playing";
     gesture.hidden = true;
     sounds.startMusic();
@@ -127,9 +160,6 @@ function handleTap() {
   if (state === "playing") jump();
 }
 viewport.addEventListener("pointerdown", handleTap);
-
-images = await loadImages();
-requestAnimationFrame(frame);
 
 function openLandingPage() {
   const clickTag = window.clickTag || "https://example.com/landing";
@@ -162,3 +192,8 @@ winCta.addEventListener("click", openLandingPage);
 muteButton.addEventListener("click", toggleMute);
 muteButton.addEventListener("pointerdown", (event) => event.stopPropagation());
 document.addEventListener("visibilitychange", handleVisibilityChange);
+
+images = await loadImages();
+requestAnimationFrame(frame);
+stage.classList.remove("is-loading");
+playIntro();
