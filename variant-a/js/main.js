@@ -27,5 +27,10 @@ fitStageToViewport(viewport, stage, (scale) => {
   redraw();
 });
 
+function frame() {
+  redraw();
+  requestAnimationFrame(frame);
+}
+
 images = await loadImages();
-redraw();
+requestAnimationFrame(frame);
