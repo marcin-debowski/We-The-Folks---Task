@@ -72,3 +72,8 @@ body {
   height: var(--bleed);
   background: var(--band);
 }
+/* Development overlay, see ?overlay=1 in js/main.js. */
+.design-overlay {
+  opacity: 0.5;
+  pointer-events: none;
+}
