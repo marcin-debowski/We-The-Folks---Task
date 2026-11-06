@@ -27,9 +27,12 @@ export function createSounds() {
       playFromStart(music);
     },
 
-    playFail() {
+    playCrash() {
       music.pause();
       playFromStart(crash);
+    },
+
+    playFailJingle() {
       playFromStart(failJingle);
     },
 

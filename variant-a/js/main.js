@@ -94,9 +94,10 @@ function update(dt) {
 
 function fail() {
   state = "fail";
+  sounds.playCrash();
   failCard.hidden = false;
   stage.classList.add("is-endcard");
-  sounds.playFail();
+  failIntro.restart();
 }
 function win() {
   state = "win";
@@ -114,6 +115,7 @@ function resetRun() {
   gesture.hidden = false;
   tapHint.play(0);
   failCard.hidden = true;
+  failIntro.pause(0);
   stage.classList.remove("is-endcard");
 }
 
@@ -137,6 +139,26 @@ const tapHint = gsap.fromTo(
     paused: true,
   },
 );
+
+// Fail endcard entrance: built once, paused, and restarted on every lost run.
+// The jingle is scheduled inside the timeline, so pausing it on replay cancels the sound too.
+const failIntro = gsap
+  .timeline({ paused: true, defaults: { duration: 0.5, ease: "power2.out" } })
+  .from(failCard, { autoAlpha: 0, duration: 0.3 }, 0.5)
+  .call(() => sounds.playFailJingle(), null, 0.5)
+  .from(
+    "#fail-bubble",
+    { scale: 0.6, autoAlpha: 0, transformOrigin: "180px 235px", ease: "back.out(1.7)" },
+    0.6,
+  )
+  .from(".fail-bac", { y: 25, autoAlpha: 0, stagger: 0.07 }, 0.8)
+  .from("#fail-poo", { y: -60, autoAlpha: 0, duration: 0.7, ease: "bounce.out" }, 0.85)
+  .from("#fail-headline", { y: 20, autoAlpha: 0 }, 1.2)
+  .from(
+    [failCta, replayButton],
+    { scale: 0.8, autoAlpha: 0, ease: "back.out(2)", stagger: 0.12 },
+    1.45,
+  );
 
 function playIntro() {
   intro = gsap
