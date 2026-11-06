@@ -22,7 +22,9 @@ const canvas = document.getElementById("game");
 const gesture = document.getElementById("gesture");
 
 // ?overlay=1 lays the design over the build to check alignment. Development only.
-if (new URLSearchParams(location.search).has("overlay")) {
+const params = new URLSearchParams(location.search);
+
+if (params.has("overlay")) {
   const overlay = new Image();
   overlay.src = "design/01-start.png";
   overlay.className = "layer design-overlay";
@@ -30,7 +32,7 @@ if (new URLSearchParams(location.search).has("overlay")) {
   stage.append(overlay);
 }
 
-const renderer = createRenderer(canvas);
+const renderer = createRenderer(canvas, params.has("debug"));
 let images = null;
 let state = "start";
 const player = { ...PLAYER_START, vy: 0 };

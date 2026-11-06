@@ -1,5 +1,6 @@
 import { STAGE_HEIGHT, STAGE_WIDTH } from "./stage.js";
-import { GUT_OFFSET_X, PLAYFIELD_TOP, TEXTURE_OFFSET_Y } from "./layout.js";
+import { CEILING_Y, FLOOR_Y, GUT_OFFSET_X, PLAYFIELD_TOP, TEXTURE_OFFSET_Y } from "./layout.js";
+import { obstacleHitboxes, playerHitboxes } from "./hitboxes.js";
 
 const ASSET_RATIO = 2; // Assets are exported at 2x.
 
@@ -37,11 +38,29 @@ export async function loadImages() {
   return Object.fromEntries(entries);
 }
 
-export function createRenderer(canvas) {
+export function createRenderer(canvas, debug) {
   const ctx = canvas.getContext("2d");
 
   function drawSprite(image, x, y) {
     ctx.drawImage(image, x, y, image.naturalWidth / ASSET_RATIO, image.naturalHeight / ASSET_RATIO);
+  }
+
+  function drawShape(shape) {
+    ctx.beginPath();
+    if (shape.type === "circle") ctx.arc(shape.x, shape.y, shape.r, 0, Math.PI * 2);
+    else ctx.rect(shape.x, shape.y, shape.w, shape.h);
+    ctx.stroke();
+  }
+
+  // ?debug=1: playfield limits in yellow, player in green, obstacles in red.
+  function drawHitboxes(images, player, obstacles, scrollX) {
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#ffd400";
+    drawShape({ type: "rect", x: 0, y: CEILING_Y, w: STAGE_WIDTH, h: FLOOR_Y - CEILING_Y });
+    ctx.strokeStyle = "#00e676";
+    playerHitboxes(player).forEach(drawShape);
+    ctx.strokeStyle = "#ff1744";
+    obstacles.forEach((o) => obstacleHitboxes(o, images[o.image], scrollX).forEach(drawShape));
   }
 
   return {
@@ -63,6 +82,7 @@ export function createRenderer(canvas) {
       drawSprite(images.border, 0, 0);
       obstacles.forEach(({ image, x, y }) => drawSprite(images[image], x - scrollX, y));
       drawSprite(images.player, player.x, player.y);
+      if (debug) drawHitboxes(images, player, obstacles, scrollX);
 
       ctx.restore();
     },
