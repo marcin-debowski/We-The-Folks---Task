@@ -24,6 +24,13 @@ function buildIntro() {
   }, 0);
 
   if (part === 'top') {
+    intro.from('.headline', {
+      opacity: 0,
+      y: 20,
+      duration: 0.8,
+      ease: 'power2.out',
+      stagger: 0.4,
+    }, 0.9);
     return intro;
   }
 

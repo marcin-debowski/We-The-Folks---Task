@@ -75,6 +75,18 @@ body {
   mix-blend-mode: screen;
 }
 
+.line-1 {
+  clip-path: inset(0 0 161px 0);
+}
+
+.line-2 {
+  clip-path: inset(89px 0 93px 0);
+}
+
+.line-3 {
+  clip-path: inset(157px 0 0 0);
+}
+
 .cta {
   position: absolute;
   left: 73.75px; /* (320 - 172.5) / 2 */
