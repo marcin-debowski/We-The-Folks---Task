@@ -26,7 +26,6 @@ body {
   overflow: hidden; /* a zoomed background must not spill out of the ad */
 }
 
-/* Full-size layers: every 2x asset that covers the whole part (bg, logo, copy, panel). */
 .layer {
   position: absolute;
   top: 0;
@@ -34,4 +33,23 @@ body {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.panel {
+  clip-path: inset(744.5px 0 61px 0);
+  opacity: 0.8; /* measured 0.81–0.82 in layout.png */
+}
+
+.copy {
+  mix-blend-mode: screen;
+}
+
+.cta {
+  position: absolute;
+  left: 73.75px; /* (320 - 172.5) / 2 */
+  top: 838px;
+  width: 172.5px;
+  height: 46.5px;
+  display: block;
+  border-radius: 7px; /* the PNG has black rounded corners (radius 14px at 2x); this clips them */
 }
