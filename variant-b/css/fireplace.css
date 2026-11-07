@@ -1,0 +1,108 @@
+/* Shared styles for the three fireplace parts (left, right, top). */
+
+/* Each part has a fixed size in CSS px; assets are 2x, so they are drawn at 50%. */
+[data-part="left"],
+[data-part="right"] {
+  --w: 320px;
+  --h: 975px;
+}
+
+[data-part="top"] {
+  --w: 1032px;
+  --h: 250px;
+}
+
+html,
+body {
+  margin: 0;
+  overflow: hidden; /* the iframe is exactly the ad size, so never show scrollbars */
+  background: #282828;
+}
+
+.stage {
+  position: relative; /* anchor for the absolutely positioned layers */
+  width: var(--w);
+  height: var(--h);
+  overflow: hidden; /* a zoomed background must not spill out of the ad */
+  cursor: pointer;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+[data-part="left"] .bg,
+[data-part="right"] .bg {
+  width: 360px;
+  height: 975px;
+}
+
+[data-part="right"] .bg {
+  left: -40px;
+}
+
+[data-part="top"] .bg {
+  width: 1032px;
+  height: 270px;
+}
+
+[data-part="left"] .product {
+  clip-path: polygon(56px 302.5px, 207.7px 286.7px, 267.4px 650.3px, 119.5px 682.3px);
+}
+
+[data-part="right"] .product {
+  clip-path: polygon(85.6px 298.7px, 228px 298.7px, 228px 293px, 277.7px 293px, 278.7px 565.4px, 85.3px 566.7px);
+}
+
+.panel {
+  clip-path: inset(744.5px 0 61px 0);
+  opacity: 0.8; /* measured 0.81–0.82 in layout.png */
+}
+
+.copy {
+  mix-blend-mode: screen;
+}
+
+.line-1 {
+  clip-path: inset(0 0 161px 0);
+}
+
+.line-2 {
+  clip-path: inset(89px 0 93px 0);
+}
+
+.line-3 {
+  clip-path: inset(157px 0 0 0);
+}
+
+.cta {
+  position: absolute;
+  left: 73.75px; /* (320 - 172.5) / 2 */
+  top: 838px;
+  width: 172.5px;
+  height: 46.5px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px; /* the PNG has black rounded corners (radius 14px at 2x); this clips them */
+  background: none;
+  cursor: pointer;
+}
+
+.cta img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
