@@ -58,6 +58,14 @@ body {
   height: 270px;
 }
 
+[data-part="left"] .product {
+  clip-path: polygon(56px 302.5px, 207.7px 286.7px, 267.4px 650.3px, 119.5px 682.3px);
+}
+
+[data-part="right"] .product {
+  clip-path: polygon(85.6px 298.7px, 228px 298.7px, 228px 293px, 277.7px 293px, 278.7px 565.4px, 85.3px 566.7px);
+}
+
 .panel {
   clip-path: inset(744.5px 0 61px 0);
   opacity: 0.8; /* measured 0.81–0.82 in layout.png */
