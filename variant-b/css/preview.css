@@ -1,0 +1,40 @@
+html,
+body {
+  margin: 0;
+  background: #282828;
+}
+
+.fireplace {
+  position: relative;
+  width: 1680px;
+  height: 975px;
+  margin: 0 auto;
+}
+
+.part {
+  position: absolute;
+  top: 0;
+  display: block;
+  border: 0;
+}
+
+.part-left {
+  left: 0;
+}
+
+.part-top {
+  left: 324px;
+}
+
+.part-right {
+  left: 1360px;
+}
+
+.overlay {
+  position: absolute;
+  left: -29.4px;
+  top: -52px;
+  width: 1732px;
+  opacity: 0.5;
+  pointer-events: none;
+}
