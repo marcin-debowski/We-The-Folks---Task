@@ -15,9 +15,9 @@ QUALITY = 80
 
 # (left, top, right, bottom) in bg-big.jpg pixels
 CROPS = {
-    "left": (0, 0, 640, 1950),
-    "top": (648, 0, 2712, 500),
-    "right": (2720, 0, 3360, 1950),
+    "left": (0, 0, 720, 1950),
+    "top": (648, 0, 2712, 540),
+    "right": (2640, 0, 3360, 1950),
 }
 
 

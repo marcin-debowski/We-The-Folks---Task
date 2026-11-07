@@ -36,6 +36,28 @@ body {
   display: block;
 }
 
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+[data-part="left"] .bg,
+[data-part="right"] .bg {
+  width: 360px;
+  height: 975px;
+}
+
+[data-part="right"] .bg {
+  left: -40px;
+}
+
+[data-part="top"] .bg {
+  width: 1032px;
+  height: 270px;
+}
+
 .panel {
   clip-path: inset(744.5px 0 61px 0);
   opacity: 0.8; /* measured 0.81–0.82 in layout.png */
