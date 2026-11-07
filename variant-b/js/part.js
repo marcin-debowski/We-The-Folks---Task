@@ -4,6 +4,7 @@ const CENTER = { x: 840, y: 487.5 };
 const PART_X = { left: 0, top: 324, right: 1360 };
 const LOGO_CENTER = '160.5px 125.25px';
 const PRODUCT_CENTER = { left: '162.7px 480.5px', right: '182px 430px' };
+const START_FALLBACK_MS = 1500;
 
 const part = document.body.dataset.part;
 
@@ -59,4 +60,24 @@ function buildIntro() {
 document.querySelector('.stage').addEventListener('click', openClickTag);
 
 const intro = buildIntro();
-window.addEventListener('load', () => intro.play());
+let fallbackTimer;
+
+function startIntro() {
+  clearTimeout(fallbackTimer);
+  intro.play();
+}
+
+window.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'fireplace-start') {
+    startIntro();
+  }
+});
+
+window.addEventListener('load', () => {
+  if (window.parent === window) {
+    startIntro();
+    return;
+  }
+  window.parent.postMessage({ type: 'fireplace-ready', part }, '*');
+  fallbackTimer = setTimeout(startIntro, START_FALLBACK_MS);
+});
